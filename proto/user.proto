@@ -1,0 +1,26 @@
+syntax = "proto3";
+package user;
+option go_package = "github.com/0xhuk/bazel-go-grpc-example/bazel-bin/grpc-gateway/proto/user;user";
+
+import "google/api/annotations.proto";
+import "proto/common/common.proto";
+
+message GetUserMessageListRequest {
+  int64 id = 1;
+  string email = 2;
+  string phone = 3;
+  string userName = 4;
+}
+message UserMessage {
+  string message = 1;
+}
+message GetUserMessageListResponse {
+  repeated UserMessage data = 1;
+}
+service UserService{
+  rpc GetUserMessageList(GetUserMessageListRequest) returns (common.ApiResult) {
+    option (google.api.http) = {
+      get: "/v1/user-message-list"
+    };
+  }
+}

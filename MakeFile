@@ -1,0 +1,25 @@
+.PHONY: clean
+clean:
+	@go clean
+	@bazel clean
+
+#build:
+#	bazel build //...
+
+# 代码生成
+grpc-gen:
+	@bazel build //:pure-proto
+	@bazel build //:grpc-gateway
+	@bazel build //:grpc-openapi
+
+#build-proto:
+#	bazel build //proto/...
+
+# 自动生成 BUILD.bazel 文件
+bazel-update:
+	@find ./proto -name '*.bazel' -type f -print -exec rm -rf {} \;
+	@bazel run //:gazelle
+
+# 更新依赖-目前将go文件都排除了-不需要执行
+bazel-update-deps:
+	@bazel run //:gazelle-update-repos

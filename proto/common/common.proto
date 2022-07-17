@@ -1,0 +1,16 @@
+syntax = "proto3";
+package common;
+option go_package = "github.com/0xhuk/bazel-go-grpc-example/bazel-bin/pure-proto/proto/common";
+import "google/protobuf/any.proto";
+
+message Pager {
+  int32 index = 1;
+  int32 size = 2;
+  int32 total = 3;
+}
+
+message ApiResult {
+  int32 code = 1;
+  string message = 2;
+  google.protobuf.Any data = 3;
+}
